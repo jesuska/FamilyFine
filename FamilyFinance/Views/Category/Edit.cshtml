@@ -1,0 +1,39 @@
+﻿@model BLL.Category
+
+@{
+    ViewBag.Title = "Kategóriák";
+}
+
+<h2>Kategória módosítása</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Kategória</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <table class="highlightedFirstColumn">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Name):</td>
+                <td>
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </td>
+            </tr>
+        </table>
+
+        <p>
+            <input type="submit" value="Mentés" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Vissza a listához", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

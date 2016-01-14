@@ -1,0 +1,45 @@
+﻿@model BLL.Transaction
+
+@{
+    ViewBag.Title = "Tranzakciók";
+}
+
+<h2>Tranzakció törlése</h2>
+
+<h3>Tényleg törölni szeretnéd?</h3>
+<fieldset>
+    <legend>Tranzakció</legend>
+    <table class="highlightedFirstColumn">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Amount):</td>
+            <td>@Html.DisplayFor(model => model.Amount) Ft</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.CreateDate):</td>
+            <td>@Model.CreateDate.ToString("D")</td>
+        </tr>
+        <tr>
+            <td>Kategória:</td>
+            <td>@(Model.Category == null ? "Besorolatlan" : Model.Category.Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Comment):</td>
+            <td>@Html.DisplayFor(model => model.Comment)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.AffectsMonthlyLimit):</td>
+            <td>@Html.DisplayFor(model => model.AffectsMonthlyLimit)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.AffectsSpecialLimit):</td>
+            <td>@Html.DisplayFor(model => model.AffectsSpecialLimit)</td>
+        </tr>
+    </table>
+
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Törlés" /> |
+        @Html.ActionLink("Vissza a listához", "Index")
+    </p>
+}

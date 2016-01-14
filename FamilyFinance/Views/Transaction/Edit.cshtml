@@ -1,0 +1,73 @@
+﻿@model BLL.Transaction
+
+@{
+    ViewBag.Title = "Tranzakciók";
+}
+
+<h2>Tranzakció módosítása</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Tranzakció</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <table class="highlightedFirstColumn">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Amount):</td>
+                <td>
+                    <input id="Amount" name="Amount" type="number" value="@Model.Amount" required class="amountBox" />
+                    @Html.ValidationMessageFor(model => model.Amount) Ft
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.CreateDate):</td>
+                <td>
+                    <input id="CreateDate" name="CreateDate" type="date" value='@Model.CreateDate.ToString("yyyy-MM-dd")' required class="createDateBox" />
+                    @Html.ValidationMessageFor(model => model.CreateDate)
+                </td>
+            </tr>
+            <tr>
+                <td>Kategória:</td>
+                <td>
+                    @Html.DropDownList("CategoryId",(SelectList)ViewData["categories"])
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Comment):</td>
+                <td>
+                    @Html.EditorFor(model => model.Comment)
+                    @Html.ValidationMessageFor(model => model.Comment)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.AffectsMonthlyLimit):</td>
+                <td>
+                    @Html.EditorFor(model => model.AffectsMonthlyLimit)
+                    @Html.ValidationMessageFor(model => model.AffectsMonthlyLimit)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.AffectsSpecialLimit):</td>
+                <td>
+                    @Html.EditorFor(model => model.AffectsSpecialLimit)
+                    @Html.ValidationMessageFor(model => model.AffectsSpecialLimit)
+                </td>
+            </tr>
+        </table>
+
+        <p>
+            <input type="submit" value="Mentés" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Vissza a listához", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

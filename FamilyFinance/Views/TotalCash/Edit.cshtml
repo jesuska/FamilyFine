@@ -1,0 +1,46 @@
+﻿@model BLL.TotalCash
+
+@{
+    ViewBag.Title = "Összesített pénzmennyiség";
+}
+
+<h2>Összesített pénzmennyiség módosítása</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Összesített pénzmennyiség</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <table class="highlightedFirstColumn">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Amount):</td>
+                <td>
+                    <input id="Amount" name="Amount" type="number" value="@Model.Amount" required class="amountBox" />
+                    @Html.ValidationMessageFor(model => model.Amount) Ft
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Date):</td>
+                <td>
+                    <input id="Date" name="Date" type="date" value='@Model.Date.ToString("yyyy-MM-dd")' required class="createDateBox" />
+                    @Html.ValidationMessageFor(model => model.Date)
+                </td>
+            </tr>
+        </table>
+
+        <p>
+            <input type="submit" value="Mentés" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Vissza a listához", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

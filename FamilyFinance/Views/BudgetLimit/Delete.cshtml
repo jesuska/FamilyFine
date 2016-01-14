@@ -1,0 +1,33 @@
+﻿@model BLL.BudgetLimit
+
+@{
+    ViewBag.Title = "Limitek";
+}
+
+<h2>Limit törlése</h2>
+
+<h3>Tényleg törölni szeretné?</h3>
+<fieldset>
+    <legend>Limit</legend>
+
+    <table class="highlightedFirstColumn">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Limit):</td>
+            <td>@Html.DisplayFor(model => model.Limit) Ft</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.StartDate):</td>
+            <td>@Model.StartDate.ToString("D")</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.IsMonthly):</td>
+            <td>@Html.DisplayFor(model => model.IsMonthly)</td>
+        </tr>
+    </table>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Törlés" /> |
+        @Html.ActionLink("Vissza a listához", "Index")
+    </p>
+}

@@ -1,0 +1,53 @@
+﻿@model BLL.BudgetLimit
+
+@{
+    ViewBag.Title = "Limitek";
+}
+
+<h2>Limitek módosítása</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Limit</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <table class="highlightedFirstColumn">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Limit):</td>
+                <td>
+                    <input id="Limit" name="Limit" type="number" value="@Model.Limit" required class="amountBox" />
+                    @Html.ValidationMessageFor(model => model.Limit) Ft
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.StartDate):</td>
+                <td>
+                    <input id="StartDate" name="StartDate" type="date" value='@Model.StartDate.ToString("yyyy-MM-dd")' required class="createDateBox" />
+                    @Html.ValidationMessageFor(model => model.StartDate)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.IsMonthly):</td>
+                <td>
+                    @Html.EditorFor(model => model.IsMonthly)
+                    @Html.ValidationMessageFor(model => model.IsMonthly)
+                </td>
+            </tr>
+        </table>
+
+        <p>
+            <input type="submit" value="Mentés" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Vissza a listához", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

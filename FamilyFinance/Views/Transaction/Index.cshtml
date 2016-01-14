@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BLL.Transaction>
+
+@{
+    ViewBag.Title = "Tranzakciók";
+}
+
+<h2>Tranzakciók listája</h2>
+
+<p>
+    @Html.ActionLink("Új tranzakció", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            Kategória
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AffectsMonthlyLimit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AffectsSpecialLimit)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.CreateDate.ToString("D")
+        </td>
+        <td>
+            @item.Amount Ft
+        </td>
+        <td>
+            @(((List<BLL.Category>)ViewData["categories"]).Find(t => t.Id == (item.CategoryId ?? 0)).Name)
+        </td>
+        <td>
+            @item.Comment
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AffectsMonthlyLimit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AffectsSpecialLimit)
+        </td>
+        <td>
+            @Html.ActionLink("Módosítás", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Törlés", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

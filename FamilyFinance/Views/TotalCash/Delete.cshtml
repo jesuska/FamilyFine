@@ -1,0 +1,29 @@
+﻿@model BLL.TotalCash
+
+@{
+    ViewBag.Title = "Összesített pénzmennyiség";
+}
+
+<h2>Összesített pénzmennyiség törlése</h2>
+
+<h3>Tényleg törölni akarja?</h3>
+<fieldset>
+    <legend>Összesített pénzmennyiség</legend>
+
+    <table class="highlightedFirstColumn">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Amount):</td>
+            <td>@(String.Format("{0:### ### ###}", Model.Amount)) Ft</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Date):</td>
+            <td>@Model.Date.ToString("D")</td>
+        </tr>
+    </table>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Törlés" /> |
+        @Html.ActionLink("Vissza a listához", "Index")
+    </p>
+}

@@ -1,0 +1,26 @@
+﻿@model BLL.Category
+
+@{
+    ViewBag.Title = "Kategóriák";
+}
+
+<h2>Kategória törlése</h2>
+
+<h3>Tényleg törölni szeretnéd?</h3>
+<fieldset>
+    <legend>Kategória törlése</legend>
+
+    <table class="highlightedFirstColumn">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Name):</td>
+            <td>@Html.DisplayFor(model => model.Name)</td>
+        </tr>
+    </table>
+
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Törlés" /> |
+        @Html.ActionLink("Vissza a listához", "Index")
+    </p>
+}

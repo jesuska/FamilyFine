@@ -1,0 +1,77 @@
+﻿@model IEnumerable<BLL.BudgetLimit>
+
+@{
+    ViewBag.Title = "Limitek";
+}
+
+<h2>Limitek historikus listája</h2>
+
+<p>
+    @Html.ActionLink("Új limit", "Create")
+</p>
+<h4>Havi limitek</h4>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Limit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Where(t => t.IsMonthly)) {
+    <tr>
+        <td>
+            @item.Limit Ft
+        </td>
+        <td>
+            @(item.StartDate == DateTime.MinValue ? String.Format("{0}-ig", item.EndDate.Value.ToString("D")) 
+                                                  : (item.EndDate == null ? String.Format("{0}-től", item.StartDate.ToString("D")) 
+                                                                          : String.Format("{0} - {1}", item.StartDate.ToString("D"), item.EndDate.Value.ToString("D"))))
+        </td>
+        <td>
+            @if(item.Id != 0) { 
+                @Html.ActionLink("Módosítás", "Edit", new { id=item.Id }) <text>|</text>
+                @Html.ActionLink("Törlés", "Delete", new { id=item.Id })
+            }
+        </td>
+    </tr>
+}
+
+</table>
+
+<h4>Anett limitek</h4>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Limit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Where(t => !t.IsMonthly)) {
+    <tr>
+        <td>
+            @item.Limit Ft
+        </td>
+        <td>
+            @(item.StartDate == DateTime.MinValue ? String.Format("{0}-ig", item.EndDate.Value.ToString("D")) 
+                                                  : (item.EndDate == null ? String.Format("{0}-től", item.StartDate.ToString("D")) 
+                                                                          : String.Format("{0} - {1}", item.StartDate.ToString("D"), item.EndDate.Value.ToString())))
+        </td>
+        <td>
+            @if(item.Id != 0) { 
+                @Html.ActionLink("Módosítás", "Edit", new { id=item.Id }) <text>|</text>
+                @Html.ActionLink("Törlés", "Delete", new { id=item.Id })
+            }
+        </td>
+    </tr>
+}
+
+</table>
+

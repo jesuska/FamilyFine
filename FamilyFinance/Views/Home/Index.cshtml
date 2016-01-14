@@ -1,0 +1,99 @@
+﻿@model BLL.Transaction
+
+@{
+    ViewBag.Title = "Tranzakciók";
+}
+
+@using (Html.BeginForm())
+{
+    <table>
+        <tr>
+            <td style="font-weight:bold;">Kezdődátum:</td>
+            <td><input id="start" name="start" type="date" value="@ViewBag.StartDate" required class="createDateBox" /></td>
+            <td rowspan="2" style="vertical-align:bottom"><input type="submit" value="Frissítés" /></td>
+        </tr>
+        <tr>
+            <td style="font-weight:bold;">Végdátum:</td>
+            <td><input id="end" name="end" type="date" value="@ViewBag.EndDate" required class="createDateBox" /></td>
+        </tr>
+    </table>
+}
+
+<div class="reportGrid">
+    <div class="reportDetails">
+        <table>
+            <tr>
+                <td>Teljes elkölthető összeg:</td>
+                <td>@ViewData["TotalLimit"] Ft</td>
+                <td></td>
+                <td>Naponta átlagosan elkölthető összeg:</td>
+                <td>@ViewData["AverageLimitPerDay"] Ft / nap (@ViewData["NumberOfDays"] nap)</td>
+            </tr>
+            <tr>
+                <td>Eddig elköltött összeg:</td>
+                <td>@ViewData["TotalExpense"] Ft</td>
+                <td></td>
+                <td>Naponta átlagosan elköltött összeg:</td>
+                <td>@ViewData["AverageExpensePerDay"] Ft / nap (@ViewData["NumberOfDaysUntilToday"] nap)</td>
+            </tr>
+            <tr>
+                <td>Teljes még elkölthető összeg:</td>
+                <td style="color:@((int)ViewData["TotalAvailableAmount"] >= 0 ? "green" : "red")">
+                    @(((int)ViewData["TotalAvailableAmount"] >= 0 ? "+" : "") + ViewData["TotalAvailableAmountFormatted"]) Ft
+                </td>
+                <td></td>
+                <td>Naponta még elkölthető összeg:</td>
+                <td>@ViewData["AvailableAmountPerDay"] Ft / nap (@((int)ViewData["NumberOfDays"]-(int)ViewData["NumberOfDaysUntilToday"]) nap)</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <img src="@Url.Action("CashFlowChart")" alt="" />
+    </div>
+    <div class="reportDetails2">
+        <table>
+            <tr>
+                <td>Aktuális pénzmennyiség:</td>
+                <td class="green">@ViewData["CurrentTotalCash"] Ft</td>
+            </tr>
+            <tr>
+                <td>Kezdő pénzmennyiség:</td>
+                <td class="green">@ViewData["StartingTotalCash"] Ft</td>
+            </tr>
+            <tr>
+                <td>Pénzmennyiség változás:</td>
+                <td class="@((int)ViewData["TotalCashDifference"] >= 0 ? "green" : "red")">
+                    @(((int)ViewData["TotalCashDifference"] >= 0 ? "+" : "") + ViewData["TotalCashDifferenceFormatted"]) Ft
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <img src="@Url.Action("BalanceChart")" alt="" />
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td style="vertical-align:top;"><img src="@Url.Action("CategoryChart")" alt="" /></td>
+                <td style="vertical-align:top;">
+                    <table>
+                        @foreach (var pair in (List<KeyValuePair<BLL.Category, int>>)ViewData["AmountsByCategoryName"])
+                        { 
+                            <tr>
+                                <td>@Html.ActionLink(pair.Key.Name, "Transactions", "Category", new { id = pair.Key.Id,  start = DateTime.Now.Date, end = DateTime.Now.Date }, null)</td>
+                                <td class="green">@(String.Format("{0:### ### ###}", pair.Value)) Ft [@(String.Format("{0:#0%}", (((double)(pair.Value)) / ((double)ViewData["TotalAmountsForCategories"]))))]</td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

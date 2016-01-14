@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BLL.Transaction>
+
+@{
+    ViewBag.Title = "Kategóriák";
+}
+
+<h2>@ViewBag.CategoryName kategóriához tartozó tranzakciók</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AffectsMonthlyLimit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AffectsSpecialLimit)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.CreateDate.ToString("D")
+        </td>
+        <td>
+            @item.Amount Ft
+        </td>
+        <td>
+            @item.Comment
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AffectsMonthlyLimit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AffectsSpecialLimit)
+        </td>
+        <td>
+            @Html.ActionLink("Módosítás", "Edit", "Transaction", new { id=item.Id }, null) |
+            @Html.ActionLink("Törlés", "Delete", "Transaction", new { id=item.Id }, null)
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    @Html.ActionLink("Vissza a listához", "Index")
+</div>
